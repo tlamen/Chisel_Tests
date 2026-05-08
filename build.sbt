@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
     name := "Chisel_Tests",
     libraryDependencies ++= Seq(
       "org.chipsalliance" %% "chisel" % chiselVersion,
-      "org.scalatest" %% "scalatest" % "3.2.19" % "test",
+      "org.scalatest" %% "scalatest" % "3.2.18" % "test",
     ),
     scalacOptions ++= Seq(
       "-language:reflectiveCalls",
@@ -20,5 +20,7 @@ lazy val root = (project in file("."))
       "-Xcheckinit",
       "-Ymacro-annotations",
     ),
+    // Chisel 7.x requires the compiler plugin
     addCompilerPlugin("org.chipsalliance" % "chisel-plugin" % chiselVersion cross CrossVersion.full),
+    Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oD"),
   )

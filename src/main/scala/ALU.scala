@@ -30,8 +30,8 @@ class ALU_RV(val WSIZE: Int = 32) extends Module {
   val SNE_OP  = 13.U(4.W)
 
   // Convert to signed for arithmetic operations
-  val signedA = io.A.asSInt()
-  val signedB = io.B.asSInt()
+  val signedA = io.A.asSInt
+  val signedB = io.B.asSInt
   val unsignedA = io.A
   val unsignedB = io.B
 
@@ -46,10 +46,10 @@ class ALU_RV(val WSIZE: Int = 32) extends Module {
   // Combinational logic for ALU operations
   switch(io.opcode) {
     is(ADD_OP) {
-      result := (signedA + signedB).asUInt()
+      result := (signedA + signedB).asUInt
     }
     is(SUB_OP) {
-      result := (signedA - signedB).asUInt()
+      result := (signedA - signedB).asUInt
     }
     is(AND_OP) {
       result := io.A & io.B
@@ -62,18 +62,18 @@ class ALU_RV(val WSIZE: Int = 32) extends Module {
     }
     is(SLL_OP) {
       // Shift left logical
-      val shiftAmount = io.B(4,0).asUInt()
+      val shiftAmount = io.B(4,0).asUInt
       result := (io.A << shiftAmount)(WSIZE-1,0)
     }
     is(SRL_OP) {
       // Shift right logical
-      val shiftAmount = io.B(4,0).asUInt()
+      val shiftAmount = io.B(4,0).asUInt
       result := (io.A >> shiftAmount)
     }
     is(SRA_OP) {
       // Shift right arithmetic
-      val shiftAmount = io.B(4,0).asUInt()
-      result := (signedA >> shiftAmount).asUInt()
+      val shiftAmount = io.B(4,0).asUInt
+      result := (signedA >> shiftAmount).asUInt
     }
     is(SLT_OP) {
       // Set less than (signed)
